@@ -1,6 +1,7 @@
 import express from 'express';
 import Hotels from "../models/Hotels";
-
+import Aportaments from "../models/Aportaments";
+import {fn, col} from 'sequelize';
 
 const router = express.Router();
 
@@ -16,15 +17,25 @@ router.get('/bring-out', async (req, res, next) => {
 		next(e)
 	}
 });
-router.get('/search-hotel', async (req, res, next) => {
+router.post('/search-room', async (req, res, next) => {
 	try {
-		const {name} = req.body;
+		const {price, services, start_day, end_day} = req.body;
 		let searchHotel;
-		searchHotel = await Hotels.findAll({where: {name: name}});
+		searchHotel = await Aportaments.findAll({
+			where: {
+				price: {$lt: price},
+				services: fn('JSON_CONTAINS', col('services'), `[${services}]`),
+			}, include: {
+				model: Client,
+				where: {
+
+				}
+			}
+		});
 		if (!searchHotel) {
 			res.json({
 				status: 'Error',
-				message: 'Hotel does not exist'
+				message: 'Room does not exist'
 			});
 			return
 		}

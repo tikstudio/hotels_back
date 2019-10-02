@@ -2,11 +2,11 @@ import Sequelize, {Model} from "sequelize";
 import sequelize from "../helpers/sequelize";
 import Hotels from "./Hotels";
 
-class Aportament extends Model {
+class Aportaments extends Model {
 
 }
 
-Aportament.init({
+Aportaments.init({
 	id: {
 		type: Sequelize.BIGINT.UNSIGNED,
 		primaryKey: true,
@@ -14,31 +14,29 @@ Aportament.init({
 		autoIncrement: true,
 	},
 	number: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.STRING,
 		allowNull: false,
-		defaultValue: 10,
 		validate: {
 			isNumeric: {
-				msg: 'Invalid Number'
+				msg: 'Invalid symbol pleas use the number'
 			}
 		}
-
 	},
 	name: {
 		type: Sequelize.STRING,
 		allowNull: false,
 		validate: {
 			isAlpha: {
-				msg: "Invalid Middle Status"
+				msg: 'Invalid name pleas use the another'
 			}
-		}
+		},
 	},
 	images: {
-		type: Sequelize.TEXT,
+		type: Sequelize.STRING,
 		allowNull: false,
 		validate: {
 			isUrl: {
-				msg: 'Invalid Url'
+				msg: 'The given URL is incorrect, pleas check it'
 			}
 		}
 	},
@@ -46,70 +44,65 @@ Aportament.init({
 		type: Sequelize.STRING,
 		allowNull: false,
 		validate: {
-			isAlpha: {
-				msg: "Invalid Middle Status"
+			isNumeric: {
+				msg: 'Invalid symbol pleas use the number'
 			}
 		}
 	},
 	price: {
 		type: Sequelize.STRING,
 		allowNull: false,
-		defaultValue: 10,
 		validate: {
 			isNumeric: {
-				msg: 'Invalid Number'
+				msg: 'Invalid symbol pleas use the number'
 			}
 		}
 	},
-
-
 	description: {
 		type: Sequelize.STRING,
-		allowNull: false,
+		allowNull: true,
 		validate: {
 			isAlpha: {
-				msg: "Invalid Middle Decription"
+				msg: 'Pleas use the apartment  description '
 			}
 		}
 	},
-
 	services: {
-		type: Sequelize.STRING,
-		allowNull: false,
+		type: Sequelize.JSON,
+		allowNull: true
 	},
-	l_beds:{
-		type: Sequelize.STRING,
-		allowNull: false,
-		validate: {
-			isAlpha: {
-				msg: "Invalid Middle Status"
-			}
-		}
+	hotel_id: {
+		type: Sequelize.BIGINT.UNSIGNED,
+		allowNull: false
 	},
-	sole_price:{
+	l_beds: {
 		type: Sequelize.STRING,
-		allowNull: false,
-		defaultValue: 10,
+		allowNull: true,
 		validate: {
 			isNumeric: {
-				msg: 'Invalid Number'
+				msg: 'Invalid symbol pleas use the number'
 			}
 		}
 	},
-	hotel_id:{
-		type: Sequelize.BIGINT.UNSIGNED,
-		allowNull: false,
+	sole_price: {
+		type: Sequelize.STRING,
+		allowNull: true,
+		validate: {
+			isNumeric: {
+				msg: 'Invalid symbol pleas use the number'
+			}
+		}
 	}
 }, {
 	sequelize,
-	modelName: 'aportoment',
+	modelName: 'aportaments',
 	timestamps: false
 });
-Aportament.belongsTo(Hotels, {
+Aportaments.belongsTo(Hotels, {
 	foreignKey: 'hotel_id',
 	onDelete: 'cascade',
 	onUpdate: 'cascade'
-})
-Aportament.sync();
+});
+Aportaments.sync();
 
-export default Aportament
+export default Aportaments

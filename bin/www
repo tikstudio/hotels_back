@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const app = require('../_app');
+const app = require('../app');
 const debug = require('debug')('hotelnode:server');
 const http = require('http');
 

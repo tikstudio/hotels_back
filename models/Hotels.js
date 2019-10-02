@@ -49,16 +49,16 @@ Hotels.init({
 	},
 	info:{
 		type: Sequelize.STRING,
-		allowNull:false,
+		allowNull:true,
 		validate:{
 			isAlpha: {
 				msg: "Invalid  Decription"
 			}
 		}
 	},
-	img:{
-		type:Sequelize.TEXT,
-		allowNull:false,
+	images:{
+		type:Sequelize.STRING,
+		allowNull:true,
 		validate:{
 			isUrl:{
 				msg:'Invalid Url'

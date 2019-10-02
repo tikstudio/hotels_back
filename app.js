@@ -1,6 +1,7 @@
 
 import fs from 'fs'
-const headers = require( "./meddelwers/headers");
+import headers from "./meddlewears/headers";
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -18,7 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
+app.use(headers);
 
 const routes = fs.readdirSync(path.join(__dirname, 'routes'));
 routes.forEach(route => {

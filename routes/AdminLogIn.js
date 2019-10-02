@@ -1,5 +1,5 @@
 import express from 'express';
-import Admin from "../models/Admin";
+import Admins from "../models/Admins";
 
 const router = express.Router();
 router.post('/admin-sing-up', async (req, res, next) => {
@@ -12,8 +12,8 @@ router.post('/admin-sing-up', async (req, res, next) => {
 				status: 'error'
 			})
 		}
-		admin = Admin.create({
-			name, l_name, email, password: Admin.passHash(password)
+		admin = Admins.create({
+			name, l_name, email, password: Admins.passHash(password)
 		})
 		res.json({
 			status: 'Ok',
@@ -26,8 +26,8 @@ router.post('/admin-sing-up', async (req, res, next) => {
 router.post('/admin-sing-in', async (req, res, next) => {
 	try {
 		const {email, password} = req.body;
-		const admin = await Admin.findOne({
-			where: {email, password: Admin.passHash(password)}
+		const admin = await Admins.findOne({
+			where: {email, password: Admins.passHash(password)}
 		});
 
 		if (!admin) {
@@ -48,7 +48,7 @@ router.post('/admin-sing-in', async (req, res, next) => {
 router.post('/admin-update-data', async (req, res, next) => {
 	try {
 		const {name, l_name, email, password} = req.body;
-		const admin = await Admin.update({
+		const admin = await Admins.update({
 			name, l_name, email, password
 		}, {where: {email: email}});
 
@@ -59,7 +59,8 @@ router.post('/admin-update-data', async (req, res, next) => {
 	} catch (e) {
 		next(e)
 	}
-})
+});
+
 
 
 module.exports = router;

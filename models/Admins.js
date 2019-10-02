@@ -2,13 +2,13 @@ import Sequelize, {Model} from "sequelize";
 import sequelize from "../helpers/sequelize";
 import {JWT_HASH} from "../config";
 
-class Admin extends Model {
+class Admins extends Model {
 	static passHash(pass) {
 		return md5(md5(pass + JWT_HASH));
 	}
 }
 
-Admin.init({
+Admins.init({
 	id: {
 		type: Sequelize.BIGINT.UNSIGNED,
 		primaryKey: true,
@@ -55,10 +55,10 @@ Admin.init({
 	}
 }, {
 	sequelize,
-	modelName: 'admin',
+	modelName: 'admins',
 	timestamps: false
 })
 
-Admin.sync();
+Admins.sync();
 
-export default Admin
+export default Admins
