@@ -92,7 +92,8 @@ Aportaments.init({
 				msg: 'Invalid symbol pleas use the number'
 			}
 		}
-	}
+	},
+
 }, {
 	sequelize,
 	modelName: 'aportaments',

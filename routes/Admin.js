@@ -1,5 +1,6 @@
 import express from 'express';
 
+var os = require('os');
 import Utilities from "../helpers/Utilities";
 import Hotels from "../models/Hotels";
 import Aportaments from "../models/Aportaments";
@@ -181,7 +182,7 @@ router.put('/add-photto', async (req, res, next) => {
 			photto
 		})
 	} catch (e) {
-
+		next(e)
 	}
 });
 router.post('/update-photto', async (req, res, next) => {
@@ -211,4 +212,5 @@ router.delete('/delete-photto', async (req, res, next) => {
 
 	}
 });
+
 module.exports = router;

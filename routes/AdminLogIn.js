@@ -62,5 +62,4 @@ router.post('/admin-update-data', async (req, res, next) => {
 });
 
 
-
 module.exports = router;
