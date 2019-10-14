@@ -7,7 +7,7 @@ class Hotels extends Model {
 SELECT id, lat, lng, SQRT(
     POW(69.1 * (lat - ${lat}), 2) +
     POW(69.1 * (${lng} - lng) * COS(lat / 57.3), 2)) AS distance
-FROM hotels ORDER BY distance LIMIT 4;`, {type: sequelize.QueryTypes.SELECT})
+FROM hotels ORDER BY distance LIMIT 4;`, {type: sequelize.QueryTypes.SELECT});
 		return nearest.map(h => h.id);
 	}
 }

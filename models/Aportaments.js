@@ -1,9 +1,12 @@
-import Sequelize, {Model} from "sequelize";
+import Sequelize, {Model, literal} from "sequelize";
 import sequelize from "../helpers/sequelize";
 import Hotels from "./Hotels";
 
-class Aportaments extends Model {
 
+class Aportaments extends Model {
+	static compare() {
+		return Aportaments.findAll({order: ['price', 'DESC'], limit: 4});
+	}
 }
 
 Aportaments.init({

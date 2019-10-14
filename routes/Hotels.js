@@ -3,7 +3,7 @@ import Hotels from "../models/Hotels";
 import Aportaments from "../models/Aportaments";
 import Clients from '../models/Clients';
 import {fn, col} from 'sequelize';
-import sequelize from "../helpers/sequelize";
+
 import Utilities from "../helpers/Utilities";
 
 import geoip from "geoip-lite";
@@ -15,10 +15,23 @@ router.get('/bring-out', async (req, res, next) => {
 		const ip = Utilities.getIp(req);
 		const {ll: [lat, lng]} = geoip.lookup(ip) || {ll: [0, 0]};
 		const nearest = await Hotels.findNearestIds(lat, lng);
-
+		const mPrice = await Aportaments.compare();
+		const daysArt = Utilities.dateArray(new Date(), new Date());
+		const exspRooms = await Aportaments.findAll({
+			where: {
+				hotel_id: {$in: nearest},
+				mPrice
+			},
+			include: {
+				model: Clients,
+				where: {
+					start_day: {$in: daysArt},
+				}
+			}
+		});
 		res.json({
 			status: 'Ok',
-			nearest,
+			nearest: exspRooms,
 		})
 	} catch (e) {
 		next(e)
@@ -46,13 +59,14 @@ router.post('/search-room', async (req, res, next) => {
 				},
 				{
 					model: Hotels
-				}
+				},
+
 			],
 			limit: LIMIT,
 			offset: LIMIT * page - LIMIT
 		});
 		if (!searchHotel) {
-			res.status(404)
+			res.status(404);
 			res.json({
 				status: 'Error',
 				message: 'Room does not exist'

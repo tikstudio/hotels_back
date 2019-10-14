@@ -29,6 +29,11 @@ Clients.init({
 	status: {
 		type: Sequelize.STRING,
 		allowNull: false,
+		validate:{
+			isCreditCard:{
+				msg:'invalid credit cart'
+			}
+		}
 	},
 	start_day: {
 		type: Sequelize.DATEONLY,

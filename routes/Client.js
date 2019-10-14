@@ -5,6 +5,7 @@ import Clients from '../models/Clients'
 import Utilities from "../helpers/Utilities";
 
 
+
 const router = express.Router();
 
 
@@ -19,16 +20,16 @@ router.put('/busy-room', async (req, res, next) => {
 				message: `This room will be free ${end_day}`
 			})
 		}
-		// const bous = await Clients.beforeFind('client',fn());
+
+
 		const dates = Utilities.dateArray(start_day, end_day);
 		const queries = [];
 		dates.forEach((day) => {
 			queries.push(Clients.create({
-				start_day: day, end_day: day, aportament_id, status: 'pending',
+				start_day: day, end_day: day, aportament_id, status,
 			}));
 		});
-		await Promise.all(queries)
-
+		await Promise.all(queries);
 		res.json({
 			status: 'Ok', dates
 		})
@@ -37,5 +38,7 @@ router.put('/busy-room', async (req, res, next) => {
 		next(e)
 	}
 });
+
+
 
 module.exports = router;
